@@ -25,7 +25,7 @@ This project will be implemented using:
 
 - Vanilla JavaScript and Node.js for frontend and backend/server
 - Twitter's Stream API that provides a live stream of tweets based on a topic or "trend"
-- Socket.io to handle the connection for incoming tweets from Twitter's API
+- Twit (npm module) to handle the connection for incoming tweets from Twitter's API
 - D3.js for data visualization
 - Sentiment - AFINN-based sentiment analysis for Node.js
 
