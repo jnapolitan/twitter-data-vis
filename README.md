@@ -17,6 +17,8 @@ Through TwitterDataVis, users will be able to:
 
 ## Wireframes
 
+![wireframe](https://github.com/jnapolitan/twitter-data-vis/blob/master/assets/wireframe.png)
+
 ## Architecture and Technologies
 
 This project will be implemented using:
