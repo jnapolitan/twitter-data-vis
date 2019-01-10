@@ -4,7 +4,8 @@
   "description": "A visualization of Twitter data using D3 and sentiment analysis",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon run server.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/jnapolitan/twitter-data-vis/issues"
   },
-  "homepage": "https://github.com/jnapolitan/twitter-data-vis#readme"
+  "homepage": "https://github.com/jnapolitan/twitter-data-vis#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "twit": "^2.2.11"
+  }
 }
