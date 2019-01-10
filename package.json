@@ -26,6 +26,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "nodemon": "^1.18.9",
+    "sentiment": "^5.0.1",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "twit": "^2.2.11"
