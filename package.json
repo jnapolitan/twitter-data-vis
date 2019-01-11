@@ -2,11 +2,10 @@
   "name": "twitter-data-vis",
   "version": "1.0.0",
   "description": "A visualization of Twitter data using D3 and sentiment analysis",
-  "main": "tweet_stream.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon run tweet_stream.js",
-    "start": "webpack --mode=development --watch"
+    "dev": "nodemon run server.js"
   },
   "repository": {
     "type": "git",
@@ -30,9 +29,9 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "nodemon": "^1.18.9",
+    "request": "^2.88.0",
     "sentiment": "^5.0.1",
-    "twit": "^2.2.11",
-    "webpack": "^4.28.4"
+    "twit": "^2.2.11"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.1"
