@@ -4,12 +4,12 @@ import socketIOClient from "socket.io-client";
 export default class Tweets extends React.Component {
   constructor(props) {
     super(props);
+    this.socket = socketIOClient("http://localhost:3000/");
     this.state = { items: [], searchTerm: "JavaScript" };
   }
 
   componentDidMount() {
-    const socket = socketIOClient('http://localhost:3000/');
-
+    const { socket } = this;
     socket.on('connect', () => {
       console.log("Socket Connected");
       socket.on("tweets", data => {
@@ -23,6 +23,10 @@ export default class Tweets extends React.Component {
       socket.removeAllListeners("tweets");
       console.log("Socket Disconnected");
     });
+  }
+
+  componentWillUnmount() {
+    this.socket.off("tweets");
   }
 
   render() {
