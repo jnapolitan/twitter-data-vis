@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.4",
     "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "nodemon": "^1.18.9",
     "sentiment": "^5.0.1",
     "twit": "^2.2.11",
