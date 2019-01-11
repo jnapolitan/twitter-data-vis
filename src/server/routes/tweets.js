@@ -1,5 +1,7 @@
-const Twitter = require('twitter');
 const keys = require('../../config/keys');
+const Twitter = require('twitter');
+const Sentiment = require('sentiment');
+
 
 module.exports = (app, io) => {
   let twitter = new Twitter({
@@ -12,7 +14,9 @@ module.exports = (app, io) => {
   let socketConnection;
   let twitterStream;
 
-  app.locals.searchTerm = 'javascript'; //Default search term for twitter stream.
+  let sentiment = new Sentiment();
+
+  app.locals.searchTerm = 'trump'; //Default search term for twitter stream.
   app.locals.showRetweets = false; //Default
 
   /**
@@ -24,7 +28,11 @@ module.exports = (app, io) => {
       track: app.locals.searchTerm
     }, (stream) => {
       stream.on('data', (tweet) => {
-        sendMessage(tweet);
+        const tweetSentiment = sentiment.analyze(tweet.text);
+        if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT') {
+          console.log(tweetSentiment.score, tweet.text);
+          sendMessage(tweet);
+        }
       });
 
       stream.on('error', (error) => {
