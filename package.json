@@ -2,10 +2,11 @@
   "name": "twitter-data-vis",
   "version": "1.0.0",
   "description": "A visualization of Twitter data using D3 and sentiment analysis",
-  "main": "index.js",
+  "main": "tweet_stream.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon run server.js"
+    "dev": "nodemon run tweet_stream.js",
+    "start": "webpack --mode=development --watch"
   },
   "repository": {
     "type": "git",
@@ -23,12 +24,16 @@
   },
   "homepage": "https://github.com/jnapolitan/twitter-data-vis#readme",
   "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
     "nodemon": "^1.18.9",
     "sentiment": "^5.0.1",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "webpack": "^4.28.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.1"
   }
 }
