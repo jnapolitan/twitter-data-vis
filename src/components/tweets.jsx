@@ -13,6 +13,7 @@ export default class Tweets extends React.Component {
     socket.on('connect', () => {
       console.log("Socket Connected");
       socket.on("tweets", data => {
+        console.log(data);
         let newList = [data].concat(this.state.items.slice(0, 15));
         this.setState({ items: newList });
       });
@@ -26,7 +27,7 @@ export default class Tweets extends React.Component {
 
   render() {
     const items = this.state.items.map(item => {
-      return <li>{item.text}</li>;
+      return <li>{item.place.full_name} : {item.text}</li>;
     });
 
     return (

@@ -29,8 +29,8 @@ module.exports = (app, io) => {
     }, (stream) => {
       stream.on('data', (tweet) => {
         const tweetSentiment = sentiment.analyze(tweet.text);
-        if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT') {
-          console.log(tweetSentiment.score, tweet.text);
+        if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
+          console.log(tweet);
           sendMessage(tweet);
         }
       });
