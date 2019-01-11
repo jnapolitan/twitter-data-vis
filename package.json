@@ -1,39 +1,32 @@
 {
   "name": "twitter-data-vis",
-  "version": "1.0.0",
-  "description": "A visualization of Twitter data using D3 and sentiment analysis",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon run server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jnapolitan/twitter-data-vis.git"
-  },
-  "keywords": [
-    "twitter",
-    "data",
-    "vis"
-  ],
-  "author": "Julian Napolitan",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jnapolitan/twitter-data-vis/issues"
-  },
-  "homepage": "https://github.com/jnapolitan/twitter-data-vis#readme",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "nodemon": "^1.18.9",
-    "request": "^2.88.0",
-    "sentiment": "^5.0.1",
-    "twit": "^2.2.11"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts": "2.1.3",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "twitter": "^1.7.1"
   },
-  "devDependencies": {
-    "webpack-cli": "^3.2.1"
-  }
+  "proxy": "http://localhost:3001",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
