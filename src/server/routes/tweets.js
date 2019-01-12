@@ -30,8 +30,8 @@ module.exports = (app, io) => {
       stream.on('data', (tweet) => {
         const tweetSentiment = sentiment.analyze(tweet.text);
         if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
-          console.log(tweet);
-          sendMessage(tweet);
+          tweet.sentiment = tweetSentiment;
+          emitData(tweet);
         }
       });
 
@@ -81,10 +81,12 @@ module.exports = (app, io) => {
    * Emits data from stream.
    * @param {String} msg 
    */
-  const sendMessage = (msg) => {
-    if (msg.text.includes('RT')) {
-      return;
-    }
-    socketConnection.emit("tweets", msg);
+  const emitData = (data) => {
+    socketConnection.emit("tweets", data);
   };
+
+  const addSentimentData = (tweet) => {
+    const sentimentData = sentiment.analyze(tweet);
+    tweet.sentiment = sentimentData;
+  }
 };

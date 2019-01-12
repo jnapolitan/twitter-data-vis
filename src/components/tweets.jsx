@@ -5,7 +5,7 @@ export default class Tweets extends React.Component {
   constructor(props) {
     super(props);
     this.socket = socketIOClient("http://localhost:3000/");
-    this.state = { items: [], searchTerm: "JavaScript" };
+    this.state = { tweets: [], searchTerm: "JavaScript" };
   }
 
   componentDidMount() {
@@ -14,8 +14,8 @@ export default class Tweets extends React.Component {
       console.log("Socket Connected");
       socket.on("tweets", data => {
         console.log(data);
-        let newList = [data].concat(this.state.items.slice(0, 15));
-        this.setState({ items: newList });
+        let newList = [data].concat(this.state.tweets.slice(0, 15));
+        this.setState({ tweets: newList });
       });
     });
     socket.on('disconnect', () => {
@@ -30,14 +30,14 @@ export default class Tweets extends React.Component {
   }
 
   render() {
-    const items = this.state.items.map(item => {
-      return <li>{item.place.full_name} : {item.text}</li>;
+    const tweets = this.state.tweets.map(tweet => {
+      return <li>{tweet.place.bounding_box.coordinates[0][0]} : {tweet.sentiment.score}</li>;
     });
 
     return (
       <>
         <h1>All Tweets</h1>
-        <ul>{items}</ul>
+        <ul>{tweets}</ul>
       </>
     )
   }
