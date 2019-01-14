@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
-import { feature } from 'toposjon-client';
+import { feature } from 'topojson-client';
 
 export default class WorldMap extends Component {
   constructor(props) {
@@ -45,14 +45,14 @@ export default class WorldMap extends Component {
     this.handleCountryClick = this.handleCountryClick.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
 
-    this.svgWidth = 800;
-    this.svgHeight = 450;
+    this.svgWidth = 1200;
+    this.svgHeight = 650;
   }
 
   projection() {
     return geoMercator()
-      .scale(100)
-      .translate([800 / 2, 450 / 2]);
+      .scale(150)
+      .translate([this.svgWidth / 2, this.svgHeight / 2]);
   }
 
   handleCountryClick(countryIndex) {
@@ -63,7 +63,7 @@ export default class WorldMap extends Component {
   }
 
   componentDidMount() {
-    fetch('/world-110m.json')
+    fetch("https://unpkg.com/world-atlas@1/world/110m.json")
       .then(res => {
         if (res.status !== 200) {
           console.log(`There was a problem: ${res.status}`);
