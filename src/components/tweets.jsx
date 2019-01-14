@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 
-export default class Tweets extends React.Component {
+export default class Tweets extends Component {
   constructor(props) {
     super(props);
     this.socket = socketIOClient("http://localhost:3000/");
