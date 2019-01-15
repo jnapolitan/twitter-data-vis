@@ -9,7 +9,8 @@ export default class WorldMap extends Component {
 
     this.state = {
       data: [],
-      tweets: []
+      tweets: [],
+      searchTerm: ''
     };
 
     // this.handleCountryClick = this.handleCountryClick.bind(this);
@@ -21,7 +22,7 @@ export default class WorldMap extends Component {
 
   projection() {
     return geoMercator()
-      .scale(150)
+      .scale(175)
       .translate([this.svgWidth / 2, this.svgHeight / 2]);
   }
 
@@ -60,6 +61,18 @@ export default class WorldMap extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.socket.off("tweets");
+  }
+
+  sentimentColor(tweet) {
+    if (tweet.sentiment < 0) {
+      return "#E82C0C";
+    } else {
+      return "#1BFF73";
+    }
+  }
+
   render() {
     const { svgWidth, svgHeight } = this;
     return(
@@ -83,8 +96,8 @@ export default class WorldMap extends Component {
               key={`marker-${i}`}
               cx={this.projection()(tweet.coordinates)[0]}
               cy={this.projection()(tweet.coordinates)[1]}
-              r={10}
-              fill="#E91E63"
+              r={Math.abs(tweet.sentiment)}
+              fill={this.sentimentColor(tweet)}
               className="marker"
               // onClick={() => this.handleMarkerClick(i)}
             />
