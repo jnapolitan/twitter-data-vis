@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
-import socketIOClient from "socket.io-client";
+import socketIOClient from "socket.io-client"; 
 
 export default class WorldMap extends Component {
   constructor(props) {
@@ -18,6 +18,8 @@ export default class WorldMap extends Component {
     this.socket = socketIOClient("http://localhost:3000/");
     this.svgWidth = 1200;
     this.svgHeight = 750;
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   projection() {
@@ -65,8 +67,23 @@ export default class WorldMap extends Component {
     this.socket.off("tweets");
   }
 
-  sentimentColor(tweet) {
-    if (tweet.sentiment < 0) {
+  handleChange(e) {
+    this.setState({searchTerm: e.target.value});
+  }
+
+  handeSubmit() {
+    return e => {
+      e.preventDefault();
+      const data = JSON.stringify({term: this.state.searchTerm});
+      fetch('http://localhost:3000/setSearchTerm', {
+        method: 'POST',
+        body: data  
+      }).then(data => console.log(data)).catch(err => console.log(err));
+    };
+  }
+
+  sentimentColor(sentiment) {
+    if (sentiment < 0) {
       return "#E82C0C";
     } else {
       return "#1BFF73";
@@ -75,36 +92,39 @@ export default class WorldMap extends Component {
 
   render() {
     const { svgWidth, svgHeight } = this;
-    return(
-      <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
-        <g className="countries">
-          {this.state.data.map((d, i) => (
-            <path 
-              key={`path-${i}`}
-              d={geoPath().projection(this.projection())(d)}
-              className="country"
-              fill={`rgba(38,50,56,${1 / this.state.data.length * i})`}
-              stroke="#FFFFFF"
-              strokeWidth={0.5}
-              // onClick={() => this.handleCountryClick(i)}
-            />
-          ))}
-        </g>
-        <g className="markers">
-          {this.state.tweets.map((tweet, i) => (
-            <circle
-              key={`marker-${i}`}
-              cx={this.projection()(tweet.coordinates)[0]}
-              cy={this.projection()(tweet.coordinates)[1]}
-              r={Math.abs(tweet.sentiment)}
-              fill={this.sentimentColor(tweet)}
-              className="marker"
-              // onClick={() => this.handleMarkerClick(i)}
-            />
-          ))}
-        </g>
-      </svg>
-    )
+    return <>
+        <form onSubmit={this.handeSubmit()}>
+          <input type="text" onChange={this.handleChange} value={this.state.searchTerm} />
+        </form>
+        <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
+          <g className="countries">
+            {this.state.data.map((d, i) => (
+              <path
+                key={`path-${i}`}
+                d={geoPath().projection(this.projection())(d)}
+                className="country"
+                fill={`rgba(38,50,56,${(1 / this.state.data.length) * i})`}
+                stroke="#FFFFFF"
+                strokeWidth={0.5}
+                // onClick={() => this.handleCountryClick(i)}
+              />
+            ))}
+          </g>
+          <g className="markers">
+            {this.state.tweets.map((tweet, i) => (
+              <circle
+                key={`marker-${i}`}
+                cx={this.projection()(tweet.coordinates)[0]}
+                cy={this.projection()(tweet.coordinates)[1]}
+                r={Math.abs(tweet.sentiment)}
+                fill={this.sentimentColor(tweet.sentiment)}
+                className="marker"
+                // onClick={() => this.handleMarkerClick(i)}
+              />
+            ))}
+          </g>
+        </svg>
+      </>;
   }
 
 

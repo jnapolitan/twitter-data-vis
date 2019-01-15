@@ -52,7 +52,7 @@ module.exports = (app, io) => {
    * Sets search term for twitter stream.
    */
   app.post('/setSearchTerm', (req, res) => {
-    let term = req.body.term;
+    const term = req.body.term;
     app.locals.searchTerm = term;
     app.locals.tweets = [];
     twitterStream.destroy();
