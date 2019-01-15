@@ -16,37 +16,38 @@ module.exports = (app, io) => {
 
   let sentiment = new Sentiment();
 
-  app.locals.searchTerm = 'trump'; //Default search term for twitter stream.
-  app.locals.showRetweets = false; //Default
+  app.locals.searchTerm = ''; //Default search term for twitter stream.
 
   /**
    * Resumes twitter stream.
    */
   const stream = () => {
-    console.log('Resuming for ' + app.locals.searchTerm);
-    twitter.stream('statuses/filter', {
-      track: app.locals.searchTerm
-    }, (stream) => {
-      stream.on('data', (tweet) => {
-        const tweetSentiment = sentiment.analyze(tweet.text);
-        if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
-          tweet.sentiment = tweetSentiment;
-          emitData({ 
-            name: tweet.place.full_name,
-            coordinates: tweet.place.bounding_box.coordinates[0][0],
-            text: tweet.text,
-            sentiment: tweetSentiment.score
-          });
-        }
-      });
+    if (app.locals.searchTerm !== '') {
+      console.log('Resuming for ' + app.locals.searchTerm);
+      twitter.stream('statuses/filter', {
+        track: app.locals.searchTerm
+      }, (stream) => {
+        stream.on('data', (tweet) => {
+          const tweetSentiment = sentiment.analyze(tweet.text);
+          if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
+            tweet.sentiment = tweetSentiment;
+            emitData({
+              name: tweet.place.full_name,
+              coordinates: tweet.place.bounding_box.coordinates[0][0],
+              text: tweet.text,
+              sentiment: tweetSentiment.score
+            });
+          }
+        });
 
-      stream.on('error', (error) => {
-        console.log(error);
-      });
+        stream.on('error', (error) => {
+          console.log(error);
+        });
 
-      twitterStream = stream;
-    });
-  }
+        twitterStream = stream;
+      });
+    }
+  };
 
   /**
    * Sets search term for twitter stream.
@@ -54,8 +55,7 @@ module.exports = (app, io) => {
   app.post('/setSearchTerm', (req, res) => {
     const term = req.body.term;
     app.locals.searchTerm = term;
-    app.locals.tweets = [];
-    twitterStream.destroy();
+    if (twitterStream) twitterStream.destroy();
     stream();
   });
 

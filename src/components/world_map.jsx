@@ -37,15 +37,14 @@ export default class WorldMap extends Component {
   // }
 
   componentDidMount() {
-    fetch("https://unpkg.com/world-atlas@1/world/110m.json")
+    axios.get("https://unpkg.com/world-atlas@1/world/110m.json")
       .then(res => {
         if (res.status !== 200) {
           console.log(`There was a problem: ${res.status}`);
           return;
         }
-        res.json().then(data => {
-          this.setState({ data: feature(data, data.objects.countries).features, });
-        });
+        const data = res.data;
+        this.setState({ data: feature(data, data.objects.countries).features, });
       });
 
     const { socket } = this;
@@ -78,6 +77,7 @@ export default class WorldMap extends Component {
       axios.post('/setSearchTerm', {
         term: this.state.searchTerm
       }).then(res => console.log(res)).catch(err => console.log(err));
+      this.setState({ tweets: [] });
     };
   }
 
