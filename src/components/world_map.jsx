@@ -17,7 +17,8 @@ export default class WorldMap extends Component {
     this.currentSearchTerm = '';
 
     // this.handleCountryClick = this.handleCountryClick.bind(this);
-    // this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
+
     this.socket = socketIOClient("http://localhost:3000/");
     this.svgWidth = 1200;
     this.svgHeight = 750;
@@ -34,9 +35,11 @@ export default class WorldMap extends Component {
   // handleCountryClick(countryIndex) {
   //   console.log("Clicked on country: ", this.state.worlddata[countryIndex]);
   // }
-  // handleMarkerClick(markerIndex) {
-  //   console.log("Marker: ", this.state.cities[markerIndex]);
-  // }
+  handleMarkerClick(markerIndex) {
+    const place = this.state.tweets[markerIndex].name;
+    const text = this.state.tweets[markerIndex].text;
+    alert(`${place}: ${text}`);
+  }
 
   componentDidMount() {
     axios.get("https://unpkg.com/world-atlas@1/world/110m.json")
@@ -128,7 +131,7 @@ export default class WorldMap extends Component {
                 r={Math.abs(tweet.sentiment) || 3}
                 fill={this.sentimentColor(tweet.sentiment)}
                 className="marker"
-                // onClick={() => this.handleMarkerClick(i)}
+                onClick={() => this.handleMarkerClick(i)}
               />
             ))}
           </g>

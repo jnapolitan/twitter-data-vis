@@ -28,7 +28,7 @@ module.exports = (app, io) => {
         track: app.locals.searchTerm
       }, (stream) => {
         stream.on('data', (tweet) => {
-          if (tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
+          if (tweet.place) {
             tweet.sentiment = sentiment.analyze(tweet.text);
             emitData({
               name: tweet.place.full_name,
