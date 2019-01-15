@@ -51,15 +51,18 @@ export default class WorldMap extends Component {
   }
 
   createMap() {
+    const svg = select(this.map)
+      .append('svg')
+      .attr("width", this.svgWidth)
+      .attr("height", this.svgHeight)
+      .attr("viewBox", `0 0 ${this.svgWidth} ${this.svgHeight}`);
+
+    const g = svg.append('g');
+
     this.state.worlddata.map((d, i) => {
       const path = geoPath().projection(this.projection())(d);
-      const svg = select(this.map)
-        .append('svg')
-        .attr("width", this.svgWidth)
-        .attr("height", this.svgHeight)
-        .attr("viewBox", `0 0 ${this.svgWidth} ${this.svgHeight}`);
-
-      svg.append("path")
+      
+      g.append("path")
         .attr('d', path)
         .attr('fill', `rgba(38,50,56,${(1 / this.state.worlddata.length) * i})`)
         .attr('stroke', '#FFFFFF')
