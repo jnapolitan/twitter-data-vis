@@ -31,7 +31,12 @@ module.exports = (app, io) => {
         const tweetSentiment = sentiment.analyze(tweet.text);
         if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
           tweet.sentiment = tweetSentiment;
-          emitData(tweet);
+          emitData({ 
+            name: tweet.place.full_name,
+            coordinates: tweet.place.bounding_box.coordinates[0][0],
+            text: tweet.text,
+            sentiment: tweetSentiment.score
+          });
         }
       });
 
@@ -84,9 +89,4 @@ module.exports = (app, io) => {
   const emitData = (data) => {
     socketConnection.emit("tweets", data);
   };
-
-  const addSentimentData = (tweet) => {
-    const sentimentData = sentiment.analyze(tweet);
-    tweet.sentiment = sentimentData;
-  }
 };

@@ -31,7 +31,7 @@ export default class Tweets extends Component {
 
   render() {
     const tweets = this.state.tweets.map(tweet => {
-      return <li>{tweet.place.bounding_box.coordinates[0][0]} : {tweet.sentiment.score}</li>;
+      return <li>{tweet.coordinates} : {tweet.sentiment}</li>;
     });
 
     return (
