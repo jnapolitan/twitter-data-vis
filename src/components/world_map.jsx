@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import socketIOClient from "socket.io-client"; 
+import axios from 'axios';
 
 export default class WorldMap extends Component {
   constructor(props) {
@@ -74,11 +75,9 @@ export default class WorldMap extends Component {
   handeSubmit() {
     return e => {
       e.preventDefault();
-      const data = JSON.stringify({term: this.state.searchTerm});
-      fetch('http://localhost:3000/setSearchTerm', {
-        method: 'POST',
-        body: data  
-      }).then(data => console.log(data)).catch(err => console.log(err));
+      axios.post('/setSearchTerm', {
+        term: this.state.searchTerm
+      }).then(res => console.log(res)).catch(err => console.log(err));
     };
   }
 
