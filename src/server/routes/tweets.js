@@ -28,14 +28,13 @@ module.exports = (app, io) => {
         track: app.locals.searchTerm
       }, (stream) => {
         stream.on('data', (tweet) => {
-          const tweetSentiment = sentiment.analyze(tweet.text);
-          if (tweetSentiment.score !== 0 && tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
-            tweet.sentiment = tweetSentiment;
+          if (tweet.text.slice(0, 2) !== 'RT' && tweet.place) {
+            tweet.sentiment = sentiment.analyze(tweet.text);
             emitData({
               name: tweet.place.full_name,
               coordinates: tweet.place.bounding_box.coordinates[0][0],
               text: tweet.text,
-              sentiment: tweetSentiment.score
+              sentiment: tweet.sentiment.score
             });
           }
         });

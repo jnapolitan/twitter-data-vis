@@ -9,10 +9,12 @@ export default class WorldMap extends Component {
     super(props);
 
     this.state = {
-      data: [],
+      worlddata: [],
       tweets: [],
       searchTerm: ''
     };
+
+    this.currentSearchTerm = '';
 
     // this.handleCountryClick = this.handleCountryClick.bind(this);
     // this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -30,7 +32,7 @@ export default class WorldMap extends Component {
   }
 
   // handleCountryClick(countryIndex) {
-  //   console.log("Clicked on country: ", this.state.data[countryIndex]);
+  //   console.log("Clicked on country: ", this.state.worlddata[countryIndex]);
   // }
   // handleMarkerClick(markerIndex) {
   //   console.log("Marker: ", this.state.cities[markerIndex]);
@@ -44,7 +46,7 @@ export default class WorldMap extends Component {
           return;
         }
         const data = res.data;
-        this.setState({ data: feature(data, data.objects.countries).features, });
+        this.setState({ worlddata: feature(data, data.objects.countries).features, });
       });
 
     const { socket } = this;
@@ -52,7 +54,7 @@ export default class WorldMap extends Component {
       console.log("Socket Connected");
       socket.on("tweets", data => {
         console.log(data);
-        let newList = [data].concat(this.state.tweets.slice(0, 15));
+        let newList = [data].concat(this.state.tweets);
         this.setState({ tweets: newList });
       });
     });
@@ -64,7 +66,9 @@ export default class WorldMap extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.off("tweets");
+    const { socket } = this;
+    socket.off("tweets");
+    socket.removeAllListeners("tweets");
   }
 
   handleChange(e) {
@@ -74,18 +78,24 @@ export default class WorldMap extends Component {
   handeSubmit() {
     return e => {
       e.preventDefault();
+      this.currentSearchTerm = this.state.searchTerm;
       axios.post('/setSearchTerm', {
         term: this.state.searchTerm
       }).then(res => console.log(res)).catch(err => console.log(err));
-      this.setState({ tweets: [] });
+      this.setState({ 
+        tweets: [],
+        searchTerm: '' 
+      });
     };
   }
 
   sentimentColor(sentiment) {
     if (sentiment < 0) {
       return "#E82C0C";
-    } else {
+    } else if (sentiment > 0) {
       return "#1BFF73";
+    } else {
+      return "#888888";
     }
   }
 
@@ -97,12 +107,12 @@ export default class WorldMap extends Component {
         </form>
         <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
           <g className="countries">
-            {this.state.data.map((d, i) => (
+            {this.state.worlddata.map((d, i) => (
               <path
                 key={`path-${i}`}
                 d={geoPath().projection(this.projection())(d)}
                 className="country"
-                fill={`rgba(38,50,56,${(1 / this.state.data.length) * i})`}
+                fill={`rgba(38,50,56,${(1 / this.state.worlddata.length) * i})`}
                 stroke="#FFFFFF"
                 strokeWidth={0.5}
                 // onClick={() => this.handleCountryClick(i)}
@@ -115,7 +125,7 @@ export default class WorldMap extends Component {
                 key={`marker-${i}`}
                 cx={this.projection()(tweet.coordinates)[0]}
                 cy={this.projection()(tweet.coordinates)[1]}
-                r={Math.abs(tweet.sentiment)}
+                r={Math.abs(tweet.sentiment) || 3}
                 fill={this.sentimentColor(tweet.sentiment)}
                 className="marker"
                 // onClick={() => this.handleMarkerClick(i)}
@@ -123,6 +133,7 @@ export default class WorldMap extends Component {
             ))}
           </g>
         </svg>
+        <h1>Current search term: {this.currentSearchTerm}</h1>
       </>;
   }
 
