@@ -37,7 +37,7 @@ export default class WorldMap extends Component {
       .translate([this.svgWidth / 2, this.svgHeight / 2]);
   }
 
-  fetchWorldData() {
+  createMap() {
     axios.get("https://unpkg.com/world-atlas@1/world/110m.json")
       .then(res => {
         if (res.status !== 200) {
@@ -46,11 +46,11 @@ export default class WorldMap extends Component {
         }
         const data = res.data;
         this.setState({ worlddata: feature(data, data.objects.countries).features, });
-        this.createMap();
+        this.renderMap();
       });
   }
 
-  createMap() {
+  renderMap() {
     const svg = select(this.map)
       .append('svg')
       .attr("width", this.svgWidth)
@@ -61,7 +61,7 @@ export default class WorldMap extends Component {
 
     this.state.worlddata.map((d, i) => {
       const path = geoPath().projection(this.projection())(d);
-      
+
       g.append("path")
         .attr('d', path)
         .attr('fill', `rgba(38,50,56,${(1 / this.state.worlddata.length) * i})`)
@@ -81,7 +81,7 @@ export default class WorldMap extends Component {
 
   componentDidMount() {
     this.map = document.getElementById('map');
-    this.fetchWorldData();
+    this.createMap();
     // this.openSocket();
   }
 
