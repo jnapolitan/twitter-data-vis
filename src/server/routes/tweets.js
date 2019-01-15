@@ -54,23 +54,8 @@ module.exports = (app, io) => {
   app.post('/setSearchTerm', (req, res) => {
     let term = req.body.term;
     app.locals.searchTerm = term;
+    app.locals.tweets = [];
     twitterStream.destroy();
-    stream();
-  });
-
-  /**
-   * Pauses the twitter stream.
-   */
-  app.post('/pause', (req, res) => {
-    console.log('Pause');
-    twitterStream.destroy();
-  });
-
-  /**
-   * Resumes the twitter stream.
-   */
-  app.post('/resume', (req, res) => {
-    console.log('Resume');
     stream();
   });
 
