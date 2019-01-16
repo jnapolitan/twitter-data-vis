@@ -15,10 +15,7 @@ export default class WorldMap extends Component {
       searchTerm: ''
     };
 
-    this.currentSearchTerm = '';
-
-    // this.handleCountryClick = this.handleCountryClick.bind(this);
-    // this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.currentSearchTerm = 'Enter a subject';
 
     this.socket = socketIOClient("http://localhost:3000/");
     this.svgWidth = 1200;
@@ -63,36 +60,38 @@ export default class WorldMap extends Component {
     this.state.worlddata.map((d, i) => {
       const path = geoPath().projection(this.projection())(d);
 
-      g.append("path")
+      return g.append("path")
         .attr('d', path)
-        .attr('fill', `rgba(38,50,56,${(1 / this.state.worlddata.length) * i})`)
+        .attr('fill', '#000000')
         .attr('stroke', '#FFFFFF')
         .attr('strokeWidth', 0.5);
     });
+
+    svg.append('g').attr('id', 'markers');
   }
 
   updateMarkers() {
-    const svg = select(document.getElementById('svg-map'))
-    if (!svg) return;
-    const g = svg.append("g");
+    const g = select(document.getElementById('markers'));
+    if (!g) return;
+    this.clearMarkers();
 
-    this.state.tweets.map((tweet, i) => {
-      g.append("circle")
+    this.state.tweets.map((tweet) => {
+      return g.append("circle")
         .attr("cx", this.projection()(tweet.coordinates)[0])
         .attr("cy", this.projection()(tweet.coordinates)[1])
-        .attr("r", Math.abs(tweet.sentiment) || 3)
+        .attr("r", Math.abs(tweet.sentiment * 2) || 4)
         .attr("fill", this.sentimentColor(tweet.sentiment));
     });
   }
 
-  // handleCountryClick(countryIndex) {
-  //   console.log("Clicked on country: ", this.state.worlddata[countryIndex]);
-  // }
-  // handleMarkerClick(markerIndex) {
-  //   const place = this.state.tweets[markerIndex].name;
-  //   const text = this.state.tweets[markerIndex].text;
-  //   alert(`${place}: ${text}`);
-  // }
+  clearMarkers() {
+    const markers = document.getElementById("markers");
+    if (markers) {
+      while (markers.firstChild) {
+        markers.removeChild(markers.firstChild);
+      }
+    }
+  }
 
   componentDidMount() {
     this.map = document.getElementById('map');
@@ -143,7 +142,6 @@ export default class WorldMap extends Component {
     socket.on("connect", () => {
       console.log("Socket Connected");
       socket.on("tweets", data => {
-        console.log(data);
         let newList = [data].concat(this.state.tweets);
         this.setState({ tweets: newList });
       });
@@ -155,48 +153,26 @@ export default class WorldMap extends Component {
     });
   }
 
-  // radarPing(d) {
-  //   const p = this.projection([d.coordinates[0], d.coordinates[1]]);
-  //   const x = p[0];
-  //   const y = p[1];
-  //   for (var i = 1; i < 5; i += 1) {
-  //       select(this.map)
-  //         .append("circle")
-  //         .classed("radar-ping", true)
-  //         .attr("cx", x)
-  //         .attr("cy", y)
-  //         .attr("r", this.startPingRadius - (this.pingThickness / 2))
-  //         .style("stroke-width", this.pingThickness / i)
-  //         .style('stroke', this.sentimentColor(d.sentiment))
-  //       .transition()
-  //         .delay(Math.pow(i, 2.5) * 50)
-  //         .duration(1000).ease('quad-in')
-  //         .attr("r", this.endPingRadius)
-  //         .style("stroke-opacity", 0)
-  //         .style('stroke', this.sentimentColor(d.sentiment));
-  //   }
-  // }
-
-  // updateMarkers() {
-  //     select(this.map)
-  //       .selectAll("circle")
-  //       .data(this.state.tweets)
-  //       .enter()
-  //       .append("circle")
-  //       .classed("point", true)
-  //       .attr("r", 3)
-  //       .each((d) => {
-  //         this.radarPing(d);
-  //       });
-  // }
-
   render() {
     return <>
-        <form onSubmit={this.handeSubmit()}>
-          <input type="text" onChange={this.handleChange} value={this.state.searchTerm} />
-        </form>
         <div id='map' />
-        <h1>Current search term: {this.currentSearchTerm}</h1>
+        <h2>{this.currentSearchTerm}</h2>
+        <form onSubmit={this.handeSubmit()}>
+          <input 
+            type="text" 
+            onChange={this.handleChange} 
+            value={this.state.searchTerm} 
+            placeholder="Search..." />
+        </form>
+        <div className="info-panel">
+          <h3>What is this?</h3>
+          <p>This project uses Twitter's Stream API, D3 geo visualization, and sentiment analysis to show how people are talking about particular subjects around the world.</p>
+          <p>Enter a subject, and as people tweet about that subject you will see dots appear on the map.</p>
+          <p><span className="red"><strong>Red</strong></span> dots indicate negative sentiment.</p>
+          <p><span className="green"><strong>Green</strong></span> dots indicate positive sentiment.</p>
+          <p><span className="gray"><strong>Gray</strong></span> dots indicate neutral sentiment.</p>
+          <p>The <strong>size</strong> of the dots indicate the severity of sentiment. The smaller the dot, the less severe the sentiment.</p>
+        </div>
       </>;
   }
 

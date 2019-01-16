@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .jshintrc
+
+/src/config/keys_dev.js
