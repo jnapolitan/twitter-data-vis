@@ -17,7 +17,7 @@ export default class WorldMap extends Component {
 
     this.currentSearchTerm = 'Enter a subject';
 
-    this.socket = socketIOClient("http://localhost:3000/");
+    this.socket = socketIOClient(window.location.host);
     this.svgWidth = 1200;
     this.svgHeight = 750;
 
