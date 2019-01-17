@@ -9,6 +9,10 @@ const path = require('path');
 const server = http.createServer(app);
 const io = socketio(server);
 
+io.attach(server, {
+  pingTimeout: 60000,
+});
+
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === 'production') {
