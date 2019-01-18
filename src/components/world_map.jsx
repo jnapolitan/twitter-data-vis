@@ -102,10 +102,10 @@ export default class WorldMap extends Component {
 
   // Set lifecycle methods
   componentDidMount() {
+    // this.closeSocket();
     this.map = document.getElementById('map');
     this.createMap();
     this.openSocket();
-    window.addEventListener('beforeunload', this.closeSocket());
   }
 
   componentDidUpdate() {
@@ -162,7 +162,10 @@ export default class WorldMap extends Component {
 
   // Manually close socket
   closeSocket() {
-    this.socket.disconnect();
+    const { socket } = this;
+    socket.off('tweets');
+    socket.removeAllListeners('tweets');
+    socket.disconnect();
     axios.post('/destroy');
   }
 

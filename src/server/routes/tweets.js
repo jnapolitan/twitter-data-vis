@@ -61,6 +61,7 @@ module.exports = (app, io) => {
 
   // Route for manually destroying the stream
   app.post('/destroy', (req, res) => {
+    console.log(twitterStrean)
     twitterStream.destroy();
     console.log('Stream ended');
   });
