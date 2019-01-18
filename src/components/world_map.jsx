@@ -105,14 +105,11 @@ export default class WorldMap extends Component {
     this.map = document.getElementById('map');
     this.createMap();
     this.openSocket();
+    window.addEventListener('beforeunload', this.closeSocket());
   }
 
   componentDidUpdate() {
     this.updateMarkers();
-  }
-
-  componentWillUnmount() {
-    this.closeSocket();
   }
 
   // Update search term from input field
@@ -165,9 +162,7 @@ export default class WorldMap extends Component {
 
   // Manually close socket
   closeSocket() {
-    const { socket } = this;
-    socket.off('tweets');
-    socket.removeAllListeners('tweets');
+    this.socket.disconnect();
     axios.post('/destroy');
   }
 
