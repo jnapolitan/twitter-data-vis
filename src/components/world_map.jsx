@@ -171,15 +171,16 @@ export default class WorldMap extends Component {
 
   render() {
     return <>
-        <div id='map' />
         <h2>{this.currentSearchTerm}</h2>
         <form onSubmit={this.handeSubmit()}>
-          <input 
-            type='text' 
-            onChange={this.handleChange} 
-            value={this.state.searchTerm} 
+          <input
+            className='search'
+            type='text'
+            onChange={this.handleChange}
+            value={this.state.searchTerm}
             placeholder='Search...' />
         </form>
+        <div id='map' />
         <div className='info-panel'>
           <h3>What is this?</h3>
           <p>This project uses Twitter's Stream API, D3 geo visualization, and sentiment analysis to show how people are talking about particular subjects around the world.</p>

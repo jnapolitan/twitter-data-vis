@@ -5,9 +5,25 @@
 .info-panel {
   text-align: left;
   position: absolute;
-  top: 5px;
+  top: 15px;
   left: 15px;
   width: 15%;
+  border: 1px solid black;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+}
+
+input.search {
+  width: 10%;
+  padding: 5px 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+input.search:focus {
+  outline: none;
 }
 
 .red {
@@ -20,4 +36,8 @@
 
 .gray {
   color: #888888;
+}
+
+#map {
+  padding: 30px;
 }
