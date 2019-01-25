@@ -56,13 +56,16 @@ module.exports = (app, io) => {
     searchTerm = term;
     if (twitterStream) twitterStream.destroy();
     stream();
-    console.log('Stream updated for', searchTerm)
+    console.log('Stream updated for', searchTerm);
   });
 
   // Route for manually destroying the stream
   app.post('/destroy', (req, res) => {
-    console.log(twitterStrean)
-    twitterStream.destroy();
+    
+    if (twitterStream)  {
+      console.log('we have a stream');
+      twitterStream.destroy();
+    }
     console.log('Stream ended');
   });
 
