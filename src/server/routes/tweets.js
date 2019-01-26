@@ -1,15 +1,15 @@
 const keys = require('../../config/keys');
-const Twit = require('twit');
+const Twitter = require('twitter-lite');
 const Sentiment = require('sentiment');
 
 
 module.exports = (app, io) => {
 
   // Configure Twitter streaming client
-  const twitter = new Twit({
+  const twitter = new Twitter({
     consumer_key: keys.consumer_key,
     consumer_secret: keys.consumer_secret,
-    access_token: keys.access_token_key,
+    access_token_key: keys.access_token_key,
     access_token_secret: keys.access_token_secret
   });
 
@@ -26,7 +26,7 @@ module.exports = (app, io) => {
         track: searchTerm
       });
 
-      twitterStream.on('message', (tweet) => {
+      twitterStream.on('data', (tweet) => {
         console.log(tweet);
         // Filter tweets that aren't geo-tagged
         if (tweet.place) {
@@ -52,7 +52,11 @@ module.exports = (app, io) => {
   app.post('/setSearchTerm', (req, res) => {
     const term = req.body.term;
     searchTerm = term;
-    if (twitterStream) twitterStream.stop();
+    if (twitterStream) {
+      console.log(twitterStream);
+      twitterStream.destroy();
+    }
+    
     stream();
     console.log('Stream updated for', searchTerm);
   });
@@ -60,7 +64,7 @@ module.exports = (app, io) => {
   // Route for manually destroying the stream
   app.post('/destroy', (req, res) => {
     if (twitterStream) {
-      twitterStream.stop();
+      twitterStream.destroy();
       console.log('Stream ended');
     }
   });
