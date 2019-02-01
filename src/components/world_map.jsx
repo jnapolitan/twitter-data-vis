@@ -191,10 +191,10 @@ export default class WorldMap extends Component {
           <h4>*Please note*</h4>
           <p>This is an ongoing project with more visualizations to come. If it seems like there aren't many (or any) Tweets being visualized, it's likely due to one of the following:</p>
           <ul>
-            <li>Not as many Tweets are geo-tagged as you might think (and we're working on non-geotagged visualizations to fill the void)</li>
-            <li>Twitter's free API (although a fantastic resource) can be somewhat finnicky</li>
+            <li>Not as many Tweets are geo-tagged as you might think (and we're working on non-geotagged visualizations to fill the void).</li>
+            <li>Twitter's free API (although a fantastic resource) can be somewhat limited.</li>
           </ul>
-          <p>If you really want to see this thing in action, type in "Trump" and let it run for a few minutes.</p>
+          <p>If you really want to see this project in action, type in "Trump" and let it run for a minute or two.</p>
         </div>
       </>;
   }
