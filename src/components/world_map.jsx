@@ -165,7 +165,7 @@ export default class WorldMap extends Component {
     const { socket } = this;
     socket.off('tweets');
     socket.removeAllListeners('tweets');
-    axios.post('/destroy');
+    // axios.post('/destroy');
   }
 
   render() {
@@ -188,6 +188,13 @@ export default class WorldMap extends Component {
           <p><span className='green'><strong>Green</strong></span> dots indicate positive sentiment.</p>
           <p><span className='gray'><strong>Gray</strong></span> dots indicate neutral sentiment.</p>
           <p>The <strong>size</strong> of the dots indicate the severity of sentiment. The smaller the dot, the less severe the sentiment.</p>
+          <h4>*Please note*</h4>
+          <p>This is an ongoing project with more visualizations to come. If it seems like there aren't many (or any) Tweets being visualized, it's likely due to one of the following:</p>
+          <ul>
+            <li>Not as many Tweets are geo-tagged as you might think (and we're working on non-geotagged visualizations to fill the void)</li>
+            <li>Twitter's free API (although a fantastic resource) can be somewhat finnicky</li>
+          </ul>
+          <p>If you really want to see this thing in action, type in "Trump" and let it run for a few minutes.</p>
         </div>
       </>;
   }
