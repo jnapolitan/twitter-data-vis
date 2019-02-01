@@ -1,6 +1,8 @@
 # Twitter Data Vis
 #### Visualizing real-time sentiment by topic on Twitter
 
+![screenshot](https://github.com/jnapolitan/twitter-data-vis/blob/master/assets/screenshot.png)
+
 ## Background and Overview
 
 Twitter is the mainstream platform for getting a pulse on not only what's happening in the world, but how people are talking about different current current events and happenings.
