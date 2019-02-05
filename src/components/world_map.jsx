@@ -121,8 +121,8 @@ export default class WorldMap extends Component {
   openSocket() {
     const { socket } = this;
     socket.on('connect', () => {
-      console.log('Socket Connected');
       socket.on('tweets', data => {
+        console.log(data);
         if (data.place) {
           const tweet = {
             name: data.place.full_name,
@@ -139,7 +139,6 @@ export default class WorldMap extends Component {
     socket.on('disconnect', () => {
       socket.off('tweets');
       socket.removeAllListeners('tweets');
-      console.log('Socket Disconnected');
     });
   }
 

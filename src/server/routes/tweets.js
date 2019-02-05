@@ -32,12 +32,6 @@ module.exports = (app, io) => {
         tweet.sentiment = sentiment.analyze(tweet.text);
         // Send data to frontend with socket.io
         socketConnection.emit('tweets', tweet);
-        // emitData({
-        //   name: tweet.place.full_name,
-        //   coordinates: tweet.place.bounding_box.coordinates[0][0],
-        //   text: tweet.text,
-        //   sentiment: tweet.sentiment.score
-        // });
       });
 
       twitterStream.on('error', (error) => {
@@ -74,9 +68,4 @@ module.exports = (app, io) => {
     socket.on('connection', () => console.log('Client connected'));
     socket.on('disconnect', () => console.log('Client disconnected'));
   });
-
-  // Emits data to the frontend 
-  const emitData = (data) => {
-    socketConnection.emit('tweets', data);
-  };
 };
