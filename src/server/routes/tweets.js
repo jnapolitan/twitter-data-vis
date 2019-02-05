@@ -28,18 +28,16 @@ module.exports = (app, io) => {
 
       twitterStream.on('data', (tweet) => {
         console.log(tweet);
-        // Filter tweets that aren't geo-tagged
-        if (tweet.place) {
-          // Append sentiment data to tweet object
-          tweet.sentiment = sentiment.analyze(tweet.text);
-          // Send data to frontend with socket.io
-          emitData({
-            name: tweet.place.full_name,
-            coordinates: tweet.place.bounding_box.coordinates[0][0],
-            text: tweet.text,
-            sentiment: tweet.sentiment.score
-          });
-        }
+        // Append sentiment data to tweet object
+        tweet.sentiment = sentiment.analyze(tweet.text);
+        // Send data to frontend with socket.io
+        socketConnection.emit('tweets', tweet);
+        // emitData({
+        //   name: tweet.place.full_name,
+        //   coordinates: tweet.place.bounding_box.coordinates[0][0],
+        //   text: tweet.text,
+        //   sentiment: tweet.sentiment.score
+        // });
       });
 
       twitterStream.on('error', (error) => {

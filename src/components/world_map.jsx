@@ -25,6 +25,18 @@ export default class WorldMap extends Component {
     this.svgHeight = 750;
   }
 
+  // Lifecycle methods
+  componentDidMount() {
+    this.closeSocket();
+    this.map = document.getElementById('map');
+    this.createMap();
+    this.openSocket();
+  }
+
+  componentDidUpdate() {
+    this.updateMarkers();
+  }
+
   // Establish map projection for adding visual elements
   projection() {
     return geoMercator()
@@ -94,18 +106,6 @@ export default class WorldMap extends Component {
     }
   }
 
-  // Set lifecycle methods
-  componentDidMount() {
-    this.closeSocket();
-    this.map = document.getElementById('map');
-    this.createMap();
-    this.openSocket();
-  }
-
-  componentDidUpdate() {
-    this.updateMarkers();
-  }
-
   // Assign colors to markers based on sentiment
   sentimentColor(sentiment) {
     if (sentiment < 0) {
@@ -123,8 +123,17 @@ export default class WorldMap extends Component {
     socket.on('connect', () => {
       console.log('Socket Connected');
       socket.on('tweets', data => {
-        let newList = [data].concat(this.state.tweets);
-        this.setState({ tweets: newList });
+        if (data.place) {
+          const tweet = {
+            name: data.place.full_name,
+            coordinates: data.place.bounding_box.coordinates[0][0],
+            text: data.text,
+            sentiment: data.sentiment.score
+          };
+
+          let newList = [tweet].concat(this.state.tweets);
+          this.setState({ tweets: newList });
+        }
       });
     });
     socket.on('disconnect', () => {
