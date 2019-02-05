@@ -9,26 +9,20 @@ export default class WorldMap extends Component {
   constructor(props) {
     super(props);
 
-    // Set component state variables to house world data, 
-    // incoming tweets, and search term input
+    // Set state to house incoming tweets
     this.state = {
-      worldData: [],
-      tweets: [],
-      searchTerm: ''
+      tweets: []
     };
-
-    // Set instance variable for displaying search term
-    this.currentSearchTerm = 'Enter a subject';
 
     // Create socket client in dev/prod environment using window location
     this.socket = socketIOClient(window.location.host);
 
+    // Create array to hold world data for rendering map
+    this.worldData = [];
+
     // Establish svg values
     this.svgWidth = 1200;
     this.svgHeight = 750;
-
-    // Bind functions for context
-    this.handleChange = this.handleChange.bind(this);
   }
 
   // Establish map projection for adding visual elements
@@ -47,7 +41,7 @@ export default class WorldMap extends Component {
           return;
         }
         const data = res.data;
-        this.setState({ worldData: feature(data, data.objects.countries).features, });
+        this.worldData = feature(data, data.objects.countries).features;
         this.renderMap();
       });
   }
@@ -63,7 +57,7 @@ export default class WorldMap extends Component {
 
     const g = svg.append('g');
 
-    this.state.worldData.map(data => {
+    this.worldData.map(data => {
       const path = geoPath().projection(this.projection())(data);
 
       return g.append('path')
@@ -112,26 +106,6 @@ export default class WorldMap extends Component {
     this.updateMarkers();
   }
 
-  // Update search term from input field
-  handleChange(e) {
-    this.setState({searchTerm: e.target.value});
-  }
-
-  // Update local state and API stream when search term is submitted
-  handeSubmit() {
-    return e => {
-      e.preventDefault();
-      this.currentSearchTerm = this.state.searchTerm;
-      axios.post('/setSearchTerm', {
-        term: this.state.searchTerm
-      }).then(res => console.log(res)).catch(err => console.log(err));
-      this.setState({ 
-        tweets: [],
-        searchTerm: '' 
-      });
-    };
-  }
-
   // Assign colors to markers based on sentiment
   sentimentColor(sentiment) {
     if (sentiment < 0) {
@@ -170,18 +144,7 @@ export default class WorldMap extends Component {
 
   render() {
     return <>
-        <h2>{this.currentSearchTerm}</h2>
-        <form onSubmit={this.handeSubmit()}>
-          <input
-            className='search'
-            type='text'
-            onChange={this.handleChange}
-            value={this.state.searchTerm}
-            placeholder='Search...' />
-        </form>
         <div id='map' />
       </>;
   }
-
-
 }
