@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 import { feature } from 'topojson-client';
-import socketIOClient from 'socket.io-client'; 
 import axios from 'axios';
 
 export default class WorldMap extends Component {
@@ -14,15 +13,14 @@ export default class WorldMap extends Component {
       tweets: []
     };
 
-    // Create socket client in dev/prod environment using window location
-    this.socket = socketIOClient(window.location.host);
-
     // Create array to hold world data for rendering map
     this.worldData = [];
 
     // Establish svg values
     this.svgWidth = 1200;
     this.svgHeight = 750;
+
+    this.socket = this.props.socket;
   }
 
   // Lifecycle methods

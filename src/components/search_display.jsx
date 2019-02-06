@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import SentimentCount from "./sentiment_count";
+import WorldMap from "./world_map";
+import socketIOClient from "socket.io-client"; 
 
-export default class SearchBar extends Component {
+export default class SearchDisplay extends Component {
   constructor(props) {
     super(props);
 
@@ -14,6 +17,9 @@ export default class SearchBar extends Component {
 
     // Bind functions for context
     this.handleChange = this.handleChange.bind(this);
+
+    // Create socket client in dev/prod environment using window location
+    this.socket = socketIOClient(window.location.host);
   }
 
   // Update search term from input field
@@ -43,8 +49,11 @@ export default class SearchBar extends Component {
             type='text'
             onChange={this.handleChange}
             value={this.state.searchTerm}
-            placeholder='Search...' />
+            placeholder='Search...' 
+          />
         </form>
+        <WorldMap socket={this.socket} />
+        <SentimentCount socket={this.socket} />
       </>
     )
   }

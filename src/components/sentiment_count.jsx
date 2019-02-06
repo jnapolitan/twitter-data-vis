@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import socketIOClient from "socket.io-client"; 
 
 export default class SentimentCount extends Component {
   constructor(props) {
@@ -12,7 +11,7 @@ export default class SentimentCount extends Component {
       positiveCount: 0
     };
 
-    this.socket = socketIOClient(window.location.host);
+    this.socket = this.props.socket;
   }
 
   componentDidMount() {
