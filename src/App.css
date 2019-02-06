@@ -38,6 +38,14 @@ input.search:focus {
   color: #888888;
 }
 
+.sentiment-count {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  width: 1200px;
+  margin: 0 auto;
+}
+
 #map {
   padding: 30px;
 }

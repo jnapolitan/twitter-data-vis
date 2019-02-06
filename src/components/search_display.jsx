@@ -18,7 +18,7 @@ export default class SearchDisplay extends Component {
     // Bind functions for context
     this.handleChange = this.handleChange.bind(this);
 
-    // Create socket client in dev/prod environment using window location
+    // Create socket client to receive emitted data from server
     this.socket = socketIOClient(window.location.host);
   }
 

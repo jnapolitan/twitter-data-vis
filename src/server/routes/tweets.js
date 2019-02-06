@@ -2,7 +2,6 @@ const keys = require('../../config/keys');
 const Twitter = require('twitter-lite');
 const Sentiment = require('sentiment');
 
-
 module.exports = (app, io) => {
 
   // Configure Twitter streaming client

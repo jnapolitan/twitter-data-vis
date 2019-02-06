@@ -56,14 +56,12 @@ export default class SentimentCount extends Component {
 
   render() {
     return <>
-    <div className="sentiment-count">
-      <ul>
+      <ul className="sentiment-count">
         <li>Total: {this.state.totalCount}</li>
         <li>Negative: {this.state.negativeCount}</li>
         <li>Neutral: {this.state.neutralCount}</li>
         <li>Positive: {this.state.positiveCount}</li>
       </ul>
-    </div>
     </>
   }
 }
