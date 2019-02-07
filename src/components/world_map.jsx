@@ -19,8 +19,6 @@ export default class WorldMap extends Component {
     // Establish svg values
     this.svgWidth = 1200;
     this.svgHeight = 750;
-
-    this.socket = this.props.socket;
   }
 
   // Lifecycle methods
@@ -117,7 +115,7 @@ export default class WorldMap extends Component {
 
   // Open the socket for incoming Tweets and update local state
   openSocket() {
-    const { socket } = this;
+    const { socket } = this.props;
     socket.on('connect', () => {
       socket.on('tweets', data => {
         console.log(data);
@@ -142,7 +140,7 @@ export default class WorldMap extends Component {
 
   // Manually close socket
   closeSocket() {
-    const { socket } = this;
+    const { socket } = this.props;
     socket.off('tweets');
     socket.removeAllListeners('tweets');
     // axios.post('/destroy');

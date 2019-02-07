@@ -10,8 +10,6 @@ export default class SentimentCount extends Component {
       neutralCount: 0,
       positiveCount: 0
     };
-
-    this.socket = this.props.socket;
   }
 
   componentDidMount() {
@@ -21,7 +19,7 @@ export default class SentimentCount extends Component {
 
   // Open the socket for incoming Tweets and update local state
   openSocket() {
-    const { socket } = this;
+    const { socket } = this.props;
     socket.on('connect', () => {
       socket.on('tweets', data => {
         this.setState({ totalCount: this.state.totalCount + 1});
@@ -48,7 +46,7 @@ export default class SentimentCount extends Component {
   }
 
   closeSocket() {
-    const { socket } = this;
+    const { socket } = this.props;
     socket.off('tweets');
     socket.removeAllListeners('tweets');
     // axios.post('/destroy');
