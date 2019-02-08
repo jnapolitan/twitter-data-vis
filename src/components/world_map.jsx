@@ -118,7 +118,6 @@ export default class WorldMap extends Component {
     const { socket } = this.props;
     socket.on('connect', () => {
       socket.on('tweets', data => {
-        console.log(data);
         if (data.place) {
           const tweet = {
             name: data.place.full_name,

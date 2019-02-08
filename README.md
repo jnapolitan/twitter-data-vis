@@ -24,7 +24,6 @@ if (searchTerm !== '') {
   });
 
   twitterStream.on('data', (tweet) => {
-    console.log(tweet);
     // Filter tweets that aren't geo-tagged
     if (tweet.place) {
       // Append sentiment data to tweet object
