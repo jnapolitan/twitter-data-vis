@@ -44,7 +44,6 @@ module.exports = (app, io) => {
     const term = req.body.term;
     searchTerm = term;
     if (twitterStream) {
-      console.log(twitterStream);
       twitterStream.destroy();
     }
     
