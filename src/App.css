@@ -43,9 +43,9 @@ input.search:focus {
   list-style: none;
   justify-content: space-around;
   width: 1200px;
-  margin: 0 auto;
+  margin: 30px auto;
 }
 
 #map {
-  padding: 30px;
+  margin: 30px;
 }

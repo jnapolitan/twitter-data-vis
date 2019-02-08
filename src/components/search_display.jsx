@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import socketIOClient from "socket.io-client"; 
 import SentimentCount from "./sentiment_count";
 import WorldMap from "./world_map";
-import socketIOClient from "socket.io-client"; 
+import BarChart from './bar_chart';
 
 export default class SearchDisplay extends Component {
   constructor(props) {
@@ -52,8 +53,9 @@ export default class SearchDisplay extends Component {
             placeholder='Search...' 
           />
         </form>
-        <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
         <SentimentCount socket={this.socket} searchTerm={this.currentSearchTerm} />
+        <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
+        <BarChart socket={this.socket} searchTerm={this.currentSearchTerm} />
       </>
     )
   }

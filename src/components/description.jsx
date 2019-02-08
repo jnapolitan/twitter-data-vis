@@ -3,7 +3,7 @@ import React from 'react';
 const Description = () => (
   <div className='info-panel'>
     <h3>What is this?</h3>
-    <p>This project uses Twitter's Stream API, D3 geo visualization, and sentiment analysis to show how people are talking about particular subjects around the world.</p>
+    <p>This project uses Twitter's Stream API, D3 geo visualization, and sentiment analysis to visualize how people are talking about particular subjects.</p>
     <p>Enter a subject, and as people tweet about that subject you will see dots appear on the map.</p>
     <p><span className='red'><strong>Red</strong></span> dots indicate negative sentiment.</p>
     <p><span className='green'><strong>Green</strong></span> dots indicate positive sentiment.</p>
