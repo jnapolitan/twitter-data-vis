@@ -33,6 +33,13 @@ export default class WorldMap extends Component {
     this.updateMarkers();
   }
 
+  // Clear tweets when searchTerm changes
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.searchTerm !== this.props.searchTerm) {
+      this.setState({ tweets: [] });
+    }
+  }
+
   // Establish map projection for adding visual elements
   projection() {
     return geoMercator()

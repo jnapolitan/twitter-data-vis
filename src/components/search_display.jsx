@@ -52,8 +52,8 @@ export default class SearchDisplay extends Component {
             placeholder='Search...' 
           />
         </form>
-        <WorldMap socket={this.socket} />
-        <SentimentCount socket={this.socket} />
+        <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
+        <SentimentCount socket={this.socket} searchTerm={this.currentSearchTerm} />
       </>
     )
   }

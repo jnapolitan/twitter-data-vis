@@ -17,6 +17,18 @@ export default class SentimentCount extends Component {
     this.openSocket();
   }
 
+  // Clear tweets when searchTerm changes
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.searchTerm !== this.props.searchTerm) {
+      this.setState({
+        totalCount: 0,
+        negativeCount: 0,
+        neutralCount: 0,
+        positiveCount: 0
+      });
+    }
+  }
+
   // Open the socket for incoming Tweets and update local state
   openSocket() {
     const { socket } = this.props;
