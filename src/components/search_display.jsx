@@ -32,7 +32,7 @@ export default class SearchDisplay extends Component {
   handeSubmit() {
     return e => {
       e.preventDefault();
-      this.currentSearchTerm = this.state.searchTerm;
+      this.currentSearchTerm = this.state.searchTerm || 'Enter a subject';
       axios.post('/setSearchTerm', {
         term: this.state.searchTerm
       }).then(res => console.log(res)).catch(err => console.log(err));
