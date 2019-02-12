@@ -84,15 +84,15 @@ export default class BarChart extends Component {
     this.clearChart();
 
     const data = [this.state.negativeCount, this.state.neutralCount, this.state.positiveCount];
-    
+
     g.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("x", (d, i) => i * 70)
-      .attr("y", (d, i) => 300 - 10 * d)
-      .attr("width", 25)
-      .attr("height", (d, i) => d * 10)
+      .attr("y", (d, i) => i * 20)
+      .attr("x", (d, i) => 300 - 10 * d)
+      .attr("width", (d, i) => d * 10)
+      .attr("height", 25)
       .attr("fill", "green");
   }
 
