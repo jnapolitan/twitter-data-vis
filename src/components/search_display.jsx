@@ -4,7 +4,7 @@ import socketIOClient from "socket.io-client";
 import SentimentCount from "./sentiment_count";
 import WorldMap from "./world_map";
 import BarChart from './bar_chart';
-import PieChart from './pie_chart';
+// import PieChart from './pie_chart';
 
 export default class SearchDisplay extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ export default class SearchDisplay extends Component {
         <SentimentCount socket={this.socket} searchTerm={this.currentSearchTerm} />
         <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
         <BarChart socket={this.socket} searchTerm={this.currentSearchTerm} />
-        <PieChart socket={this.socket} searchTerm={this.currentSearchTerm} />
+        {/* <PieChart socket={this.socket} searchTerm={this.currentSearchTerm} /> */}
       </>
     )
   }
