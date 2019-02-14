@@ -23,6 +23,10 @@ export default class SearchDisplay extends Component {
     this.socket = socketIOClient(window.location.host);
   }
 
+  componentDidMount() {
+    // axios.post('/destroy');
+  }
+
   // Update search term from input field
   handleChange(e) {
     this.setState({ searchTerm: e.target.value });
