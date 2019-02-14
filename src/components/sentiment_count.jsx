@@ -65,12 +65,14 @@ export default class SentimentCount extends Component {
   }
 
   render() {
+    const { totalCount, negativeCount, neutralCount, positiveCount } = this.state;
+
     return <>
       <ul className="sentiment-count">
-        <li>Total: {this.state.totalCount}</li>
-        <li>Negative: {this.state.negativeCount}</li>
-        <li>Neutral: {this.state.neutralCount}</li>
-        <li>Positive: {this.state.positiveCount}</li>
+        <li>Total: {totalCount}</li>
+        <li>Negative: {`${Math.floor(negativeCount/totalCount * 100) || 0}%`}</li>
+        <li>Neutral: {`${Math.floor(neutralCount / totalCount * 100) || 0}%`}</li>
+        <li>Positive: {`${Math.floor(positiveCount / totalCount * 100) || 0}%`}</li>
       </ul>
     </>
   }
