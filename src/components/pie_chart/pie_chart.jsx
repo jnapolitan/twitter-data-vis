@@ -8,9 +8,9 @@ export default class PieChart extends Component {
     super(props);
 
     this.state = {
-      negativeCount: 0,
-      neutralCount: 0,
-      positiveCount: 0
+      negativeCount: 1,
+      neutralCount: 1,
+      positiveCount: 1
     };
 
     this.height = 400;
@@ -73,7 +73,7 @@ export default class PieChart extends Component {
     ]);
 
     return <>
-      <svg height={this.height} width={this.width}>
+      <svg height={this.height} width={this.width} className="pie-chart">
         <g transform={`translate(${this.width/2}, ${this.height/2})`}>
           <Slice pie={pie} />
         </g>

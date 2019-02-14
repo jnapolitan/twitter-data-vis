@@ -6,7 +6,7 @@ const Slice = props => {
 
   let arc = d3.arc()
     .innerRadius(0)
-    .outerRadius(100);
+    .outerRadius(120);
 
   let interpolate = d3.interpolateRgb('#eaaf89', '#bc3358');
 

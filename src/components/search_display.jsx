@@ -44,20 +44,24 @@ export default class SearchDisplay extends Component {
   render() {
     return (
       <>
-        <h2>{this.currentSearchTerm}</h2>
-        <form onSubmit={this.handeSubmit()}>
-          <input
-            className='search'
-            type='text'
-            onChange={this.handleChange}
-            value={this.state.searchTerm}
-            placeholder='Search...' 
-          />
-        </form>
-        <SentimentCount socket={this.socket} searchTerm={this.currentSearchTerm} />
+        <div className="search">
+          <h2>{this.currentSearchTerm}</h2>
+          <form onSubmit={this.handeSubmit()}>
+            <input
+              className='search'
+              type='text'
+              onChange={this.handleChange}
+              value={this.state.searchTerm}
+              placeholder='Search...' 
+            />
+          </form>
+        </div>
+        <div className="top-row-modules">
+          <SentimentCount socket={this.socket} searchTerm={this.currentSearchTerm} />
+          <PieChart socket={this.socket} searchTerm={this.currentSearchTerm} />
+        </div>
         <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
         {/* <BarChart socket={this.socket} searchTerm={this.currentSearchTerm} /> */}
-        <PieChart socket={this.socket} searchTerm={this.currentSearchTerm} />
       </>
     )
   }
