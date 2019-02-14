@@ -10,12 +10,10 @@ const Slice = props => {
 
   let interpolate = d3.interpolateRgb('#eaaf89', '#bc3358');
 
-  console.log(pie);
-
   return pie.map((slice, idx) => {
     let sliceColor = interpolate(idx / (pie.length - 1));
 
-    return <path d={arc(slice)} fill={sliceColor}/>
+    return <path d={arc(slice)} fill={sliceColor} key={idx} />
   });
 };
 

@@ -8,9 +8,9 @@ export default class PieChart extends Component {
     super(props);
 
     this.state = {
-      negative: 1,
-      neutral: 2,
-      positive: 3
+      negativeCount: 0,
+      neutralCount: 0,
+      positiveCount: 0
     };
 
     this.height = 400;
@@ -67,9 +67,9 @@ export default class PieChart extends Component {
 
   render() {
     const pie = d3Shape.pie()([
-      this.state.negative,
-      this.state.neutral,
-      this.state.positive
+      this.state.negativeCount,
+      this.state.neutralCount,
+      this.state.positiveCount
     ]);
 
     return <>
