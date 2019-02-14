@@ -70,9 +70,9 @@ export default class SentimentCount extends Component {
     return <>
       <ul className="sentiment-count">
         <li>Total: {totalCount}</li>
-        <li>Negative: {`${Math.floor(negativeCount/totalCount * 100) || 0}%`}</li>
-        <li>Neutral: {`${Math.floor(neutralCount / totalCount * 100) || 0}%`}</li>
-        <li>Positive: {`${Math.floor(positiveCount / totalCount * 100) || 0}%`}</li>
+        <li className="red">Negative: {`${Math.floor(negativeCount/totalCount * 100) || 0}%`}</li>
+        <li className="gray">Neutral: {`${Math.floor(neutralCount / totalCount * 100) || 0}%`}</li>
+        <li className="green">Positive: {`${Math.floor(positiveCount / totalCount * 100) || 0}%`}</li>
       </ul>
     </>
   }
