@@ -61,7 +61,6 @@ export default class SentimentCount extends Component {
     const { socket } = this.props;
     socket.off('tweets');
     socket.removeAllListeners('tweets');
-    // axios.post('/destroy');
   }
 
   render() {

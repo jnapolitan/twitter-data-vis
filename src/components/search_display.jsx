@@ -3,7 +3,6 @@ import axios from 'axios';
 import socketIOClient from "socket.io-client"; 
 import SentimentCount from "./sentiment_count";
 import WorldMap from "./world_map";
-// import BarChart from './bar_chart';
 import PieChart from './pie_chart/pie_chart';
 
 export default class SearchDisplay extends Component {
@@ -61,7 +60,6 @@ export default class SearchDisplay extends Component {
           <PieChart socket={this.socket} searchTerm={this.currentSearchTerm} />
         </div>
         <WorldMap socket={this.socket} searchTerm={this.currentSearchTerm} />
-        {/* <BarChart socket={this.socket} searchTerm={this.currentSearchTerm} /> */}
       </>
     )
   }
