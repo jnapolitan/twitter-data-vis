@@ -62,3 +62,7 @@ input.search:focus {
 #map {
   margin: 30px;
 }
+
+.centered {
+  text-align: center;
+}

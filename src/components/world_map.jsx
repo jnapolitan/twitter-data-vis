@@ -154,6 +154,7 @@ export default class WorldMap extends Component {
 
   render() {
     return <>
+        <p className="centered">Geo-tagged tweets will appear on the map below. Color and size of the dots indicate sentiment and severity of sentiment, respectively.</p>
         <div id='map' />
       </>;
   }
