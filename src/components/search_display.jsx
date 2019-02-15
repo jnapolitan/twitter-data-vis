@@ -24,7 +24,7 @@ export default class SearchDisplay extends Component {
   }
 
   componentDidMount() {
-    // axios.post('/destroy');
+    axios.post('/destroy');
   }
 
   // Update search term from input field

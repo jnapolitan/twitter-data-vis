@@ -13,8 +13,7 @@ module.exports = (app, io) => {
   });
 
   // Establish client variables
-  let socketConnection;
-  let twitterStream;
+  let socketConnection, twitterStream, destroy;
   let sentiment = new Sentiment();
   let searchTerm = '';
 
@@ -26,7 +25,6 @@ module.exports = (app, io) => {
       });
 
       twitterStream.on('data', (tweet) => {
-        console.log(tweet);
         // Append sentiment data to tweet object
         tweet.sentiment = sentiment.analyze(tweet.text);
         // Send data to frontend with socket.io
@@ -46,7 +44,6 @@ module.exports = (app, io) => {
     if (twitterStream) {
       twitterStream.destroy();
     }
-    
     stream();
     console.log('Stream updated for', searchTerm);
   });
