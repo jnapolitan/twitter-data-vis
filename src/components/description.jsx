@@ -8,7 +8,7 @@ const Description = () => (
     <p><span className='red'><strong>Red</strong></span> indicates negative sentiment.</p>
     <p><span className='green'><strong>Green</strong></span> indicates positive sentiment.</p>
     <p><span className='gray'><strong>Gray</strong></span> indicates neutral sentiment.</p>
-    <h4>*Please note*</h4>
+    <h4>PLEASE NOTE</h4>
     <p>Twitter's Stream API only offers a limited number of connections. If the app doesn't appear to be working, please try again later!</p>
   </div>
 )
