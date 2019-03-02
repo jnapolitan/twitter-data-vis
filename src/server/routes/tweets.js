@@ -13,7 +13,7 @@ module.exports = (app, io) => {
   });
 
   // Establish client variables
-  let socketConnection, twitterStream, destroy;
+  let socketConnection, twitterStream;
   let sentiment = new Sentiment();
   let searchTerm = '';
 
@@ -42,7 +42,7 @@ module.exports = (app, io) => {
     const term = req.body.term;
     searchTerm = term;
     if (twitterStream) {
-      twitterStream.destroy();
+      process.nextTick(() => twitterStream.destroy());
     }
     stream();
     console.log('Stream updated for', searchTerm);
@@ -51,7 +51,7 @@ module.exports = (app, io) => {
   // Route for manually destroying the stream
   app.post('/destroy', (req, res) => {
     if (twitterStream) {
-      twitterStream.destroy();
+      process.nextTick(() => twitterStream.destroy());
       console.log('Stream ended');
     }
   });
