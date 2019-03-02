@@ -42,7 +42,7 @@ module.exports = (app, io) => {
     const term = req.body.term;
     searchTerm = term;
     if (twitterStream) {
-      process.nextTick(() => twitterStream.destroy());
+      twitterStream.destroy();
     }
     stream();
     console.log('Stream updated for', searchTerm);
@@ -51,7 +51,7 @@ module.exports = (app, io) => {
   // Route for manually destroying the stream
   app.post('/destroy', (req, res) => {
     if (twitterStream) {
-      process.nextTick(() => twitterStream.destroy());
+      twitterStream.destroy();
       console.log('Stream ended');
     }
   });
